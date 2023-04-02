@@ -6,7 +6,7 @@ import Reset from './Reset';
 import FriendProfile from './FriendProfile';
 import News from './News';
 import Chat from './Chat';
-// import EditProfile from './EditProfile';
+import EditProfile from './EditProfile';
 
 const Pages = () => {
   return (
@@ -17,9 +17,10 @@ const Pages = () => {
         <Route path='/register' element={<Register />}></Route>
         <Route path='/reset' element={<Reset />}></Route>
         <Route path='/profile/:id' element={<FriendProfile />}></Route>
+        <Route path='/profile/:name' element={<FriendProfile />}></Route>
         <Route path='/news' element={<News />}></Route>
         <Route path="/chat/:id" element={<Chat />} />
-        {/* <Route path="/editProfile" element={<EditProfile />} /> */}
+        <Route path="/editProfile" element={<EditProfile />} />
       </Routes>
     </div>
   )

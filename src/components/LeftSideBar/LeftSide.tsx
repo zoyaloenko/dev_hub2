@@ -11,14 +11,11 @@ const LeftSide = () => {
 
   const { user, userData } = useContext(AuthContext)
 
+  console.log(user)
+
   return (
     <div className="flex flex-col h-screen gh-white pb-4 border-2 rounded-r-xl shadow-lg">
     <div className="flex flex-col items-center relative">
-      {/* <img
-        className="h-28 w-full rounded-r-xl"
-        src={nature}
-        alt="nature"
-      ></img> */}
       <div className="h-28 w-full rounded-r-xl bg-green-500"></div>
       <div className="absolute -bottom-6">
         <Tooltip content="Profile" placement="top">

@@ -3,19 +3,16 @@ import avatar from '../../assets/images/developer.jpeg';
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../AppContext/AppContext'; 
-import remove from "../../assets/images/delete.png";
 import { arrayRemove, collection, getDocs, query, updateDoc, where, doc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faMessage, faTrash } from "@fortawesome/free-solid-svg-icons";
-// const waterslide = require('../../assets/images/waterslide.jpeg');
 
 
 const RightSide = () => {
     const [input, setInput] = useState('');
     const { user, userData } = useContext(AuthContext);
     const friendList = userData?.friends;
-
 
 
     const searchFriends = (data) => {
@@ -38,15 +35,6 @@ const RightSide = () => {
 
   return (
     <div className="flex flex-col h-screen bg-white shadow-lg border-2 rounded-l-xl">
-    {/* <div className="flex flex-col items-center relative pt-10">
-      <img className=" h-48 rounded-md" src={waterslide} alt="nature" />
-    </div>
-    <p className="font-normal text-sm text-gray-700 max-w-fit no-underline tracking-normal leading-tight py-2 mx-2">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque neque
-      quidem quaerat aperiam dignissimos, nesciunt ratione maxime molestiae
-      impedit reiciendis quam non magnam sed distinctio. Iste magni sit nulla
-      officia? 
-    </p> */}
     <div className="mx-2 mt-10">
       <p className="font-medium text-sm text-gray-700 no-underline tracking-normal leading-non">
         Friends:{' '}
@@ -85,7 +73,8 @@ const RightSide = () => {
                       onClick={() => removeFriend(friend.id, friend.name, friend.image)} 
                       className='mr-3 cursor-pointer'/>
                     <Link to={{ pathname: `/chat/${friend.id}`, state: { friend } }}>
-                      <FontAwesomeIcon icon={faMessage} ></FontAwesomeIcon>
+                      <FontAwesomeIcon icon={faMessage} >
+                      </FontAwesomeIcon>
                     </Link>
                 </div>
             </div>;

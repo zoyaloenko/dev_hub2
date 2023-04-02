@@ -48,26 +48,6 @@ const CommentSection = ({ postId }) => {
     }
   };
 
-  // useEffect(() => {
-  //   const getComments = async () => {
-  //     try {
-  //       const collectionOfComments = collection(db, `posts/${postId}/comments`);
-  //       const q = query(collectionOfComments, orderBy("timestamp", "desc"));
-  //       await onSnapshot(q, (doc) => {
-  //         dispatch({
-  //           type: ADD_COMMENT,
-  //           comments: doc.docs?.map((item) => item.data()),
-  //         });
-  //       });
-  //     } catch (err) {
-  //       dispatch({ type: HANDLE_ERROR });
-  //       alert(err.message);
-  //       console.log(err.message);
-  //     }
-  //   };
-  //   return () => getComments();
-  // }, [postId, ADD_COMMENT, HANDLE_ERROR]);
-
   useEffect(() => {
     const collectionOfComments = collection(db, `posts/${postId}/comments`);
     const q = query(collectionOfComments, orderBy("timestamp", "desc"));

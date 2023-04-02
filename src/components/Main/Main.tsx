@@ -8,6 +8,7 @@ import PostCard from "./PostCard";
 
 import { Avatar, Button } from '@material-tailwind/react';
 import avatar from '../../assets/images/developer.jpeg';
+import UserList from "../Pages/UserList";
 const addImage = require('../../assets/images/addImage.png');
 
 
@@ -178,6 +179,8 @@ useEffect(() => {
       </div>
     </div>
   </div>
+  <UserList />
+
   <div className="flex flex-col py-4 w-full">{state.posts.length > 0 && state?.posts.map((post: { logo: any; documentId: any; uid: any; name: any; email: any; image: any; text: any; timestamp: { toDate: () => string | number | Date; }; }, index: Key | null | undefined) => {
       return (
         <PostCard 

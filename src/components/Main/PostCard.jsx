@@ -81,26 +81,6 @@ const PostCard = ({ uid, id, logo, name, email, text, image, timestamp }) => {
         }
       };
     
-
-    // useEffect(() => {
-    //     const getLikes = async () => {
-    //         try {
-    //             const q = collection(db, "posts", id, "likes");
-    //             await onSnapshot(q, (doc) => {
-    //                 dispatch({
-    //                     type: ADD_LIKE,
-    //                     likes: doc.docs.map((item) => item.data())
-    //                 })
-    //             })
-                
-    //         } catch (error) {
-    //             dispatch({ type: HANDLE_ERROR })
-    //             console.log(error.message)
-    //         }
-    //     };
-    //     return () => getLikes();
-    // }, [id, ADD_LIKE, HANDLE_ERROR])
-
     useEffect(() => {
       const q = collection(db, "posts", id, "likes");
   

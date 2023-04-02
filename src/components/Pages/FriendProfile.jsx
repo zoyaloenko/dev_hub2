@@ -6,18 +6,21 @@ import { Avatar } from '@material-tailwind/react';
 import avatar from '../../assets/images/developer.jpeg';
 
 import {
-    setDoc,
     collection,
-    doc,
-    serverTimestamp,
-    orderBy,
     query,
     onSnapshot,
     where,
+    getDocs,
+    updateDoc,
+    arrayUnion,
   } from "firebase/firestore";
   import { db } from "../firebase/firebase";
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from "../AppContext/AppContext";
+import addFriend from "../../assets/images/add-friend.png";
+
+
   
 
 
@@ -28,6 +31,8 @@ const FriendProfile = () => {
     const { id } = useParams();
     const [ profile, setProfile ] = useState(null);
 
+    const { user } = useContext(AuthContext);
+
     useEffect(() => {
         const getUserProfile = async () => {
           const q = query(collection(db, "users"), where("uid", "==", id));
@@ -37,7 +42,26 @@ const FriendProfile = () => {
         };
         getUserProfile();
       }, [id]);
-    
+
+
+      const addUser = async () => {
+        try {
+            const q = query(collection(db, "users"), where("uid", "==", user.uid));
+            const doc = await getDocs(q);
+            const data = doc.docs[0].ref;
+            await updateDoc(data, {
+                friends: arrayUnion({
+                    id: profile.uid,
+                    image: profile.image,
+                    name: profile.name
+                })
+            })
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+
 
   return (
     <div className='w-full'>
@@ -52,14 +76,24 @@ const FriendProfile = () => {
           <div className="w-[80%] mx-auto">
             <div>
                 <div className='relative py-4'>
-                    {/* <img 
-                        className='h-96 w-full rounded-md' 
-                        src={profilePic} 
-                        alt="profilePic"/> */}
                     <div className="h-96 w-full bg-green-500"></div>
+                    <div className="absolute top-10 right-8">
+                    {user?.uid !== profile?.uid && (
+                        <div
+                          onClick={addUser}
+                          className="flex justify-end cursor-pointer"
+                        >
+                          <img
+                            className="hover:bg-blue-100 rounded-xl p-2"
+                            src={addFriend}
+                            alt="addFriend"
+                          ></img>
+                        </div>
+                      )}
 
-                {/* </div> */}
+                    </div>
                     <div className='absolute bottom-12 left-6'>
+                      
                     <Avatar 
                         src={profile?.image || avatar}
                         alt="avatar"
@@ -96,7 +130,7 @@ const FriendProfile = () => {
                     </svg>
 
                     <span className="ml-2 py-2 font-roboto font-medium text-md text-black no-underline tracking-normal leading-none">
-                      From Seoul, South Korea
+                    {`Studies ${profile?.languages}`}
                     </span>
                   </div>
                   <div className="flex items-center">
@@ -116,12 +150,10 @@ const FriendProfile = () => {
                     </svg>
 
                     <span className="ml-2 py-2 font-roboto font-medium text-md text-black no-underline tracking-normal leading-none">
-                      Lives in Amsterdam
+                      {`Lives in ${profile?.location}`}
                     </span>
                   </div>
                 </div>
-
-                {/* </div> */}
                 </div>
             </div>
           <Main />
