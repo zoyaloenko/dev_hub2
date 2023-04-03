@@ -1,11 +1,107 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { Link } from 'react-router-dom';
 
+
+// const mapStyle = [
+//   {
+//       "featureType": "administrative",
+//       "elementType": "all",
+//       "stylers": [
+//           {
+//               "visibility": "on"
+//           },
+//           {
+//               "lightness": 33
+//           }
+//       ]
+//   },
+//   {
+//       "featureType": "landscape",
+//       "elementType": "all",
+//       "stylers": [
+//           {
+//               "color": "#f2e5d4"
+//           }
+//       ]
+//   },
+//   {
+//       "featureType": "poi.park",
+//       "elementType": "geometry",
+//       "stylers": [
+//           {
+//               "color": "#c5dac6"
+//           }
+//       ]
+//   },
+//   {
+//       "featureType": "poi.park",
+//       "elementType": "labels",
+//       "stylers": [
+//           {
+//               "visibility": "on"
+//           },
+//           {
+//               "lightness": 20
+//           }
+//       ]
+//   },
+//   {
+//       "featureType": "road",
+//       "elementType": "all",
+//       "stylers": [
+//           {
+//               "lightness": 20
+//           }
+//       ]
+//   },
+//   {
+//       "featureType": "road.highway",
+//       "elementType": "geometry",
+//       "stylers": [
+//           {
+//               "color": "#c5c6c6"
+//           }
+//       ]
+//   },
+//   {
+//       "featureType": "road.arterial",
+//       "elementType": "geometry",
+//       "stylers": [
+//           {
+//               "color": "#e4d7c6"
+//           }
+//       ]
+//   },
+//   {
+//       "featureType": "road.local",
+//       "elementType": "geometry",
+//       "stylers": [
+//           {
+//               "color": "#fbfaf7"
+//           }
+//       ]
+//   },
+//   {
+//       "featureType": "water",
+//       "elementType": "all",
+//       "stylers": [
+//           {
+//               "visibility": "on"
+//           },
+//           {
+//               "color": "#acbcc9"
+//           }
+//       ]
+//   }
+// ]
+
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState('');
+  const [showMap, setShowMap] = useState(false); 
+  const mapRef = useRef(null);
 
   useEffect(() => {
     async function fetchUsers() {
@@ -25,10 +121,77 @@ const UserList = () => {
   }, [selectedLanguage]);
 
 
+
+  useEffect(() => {
+    if (showMap && mapRef.current) {
+      const amsterdam = { lat: 52.3676, lng: 4.9041 };
+      const map = new window.google.maps.Map(mapRef.current, {
+        center: amsterdam,
+        zoom: 8,
+        // styles: mapStyle,
+      });
+      
+      users.forEach(user => { // add markers for each user
+
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(user.location)}&key=AIzaSyDILSOzFL1ECM95bw8rm5pq9DHdBo-pNx8`;
+
+        if(user.location) {
+
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              // Extract the latitude and longitude from the geocoding response
+              const { lat, lng } = data.results[0].geometry.location;
+              const marker = new window.google.maps.Marker({
+                position: { lat, lng },
+                map,
+                // icon: {
+                //   path: window.google.maps.SymbolPath.BACKWARD_CLOSED_ARROW, // or any other symbol path
+                //   fillColor: '#f00', // replace with desired color
+                //   fillOpacity: 1,
+                //   strokeWeight: 0,
+                //   scale: 10,
+                // },                // title: user.name,
+                // label: {
+                //   text: `${user.name}: ${user.languages}`,
+                //   color: 'black',
+                //   fontSize: '16px',
+                //   fontWeight: 'bold',
+                // },
+              });
+              marker.addListener('click', () => {
+                <Link to={`/profile/${user.uid}`} />;
+              });
+
+              console.log(`Latitude: ${lat}, Longitude: ${lng}`);
+            })
+            .catch(error => console.error(error));
+
+
+          // const { latitude, longitude } = user.location;
+          // const marker = new window.google.maps.Marker({
+          //   position: { lat: latitude, lng: longitude },
+          //   map: map,
+          //   title: user.name,
+          // });
+
+          
+        }
+      });
+    }
+  }, [showMap, users]);
+
+
+
   const handleLanguageSelect = (language) => {
     setSelectedLanguage(language);
   };
 
+
+
+  const handleMapToggle = () => {
+    setShowMap(!showMap);
+  };
   
 
   return (
@@ -49,7 +212,10 @@ const UserList = () => {
           <option value="PHP">PHP</option>
           <option value="C++">C++</option>
         </select>
-      </div>
+        <button onClick={handleMapToggle} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          {showMap ? "Hide Map" : "Show Map"}
+        </button>
+              </div>
       {users.map((user) => (
   <Link key={user.id} to={`/profile/${user.uid}`}>
     <div key={user.id} className="bg-white p-2 rounded-md shadow-md flex items-center">
@@ -62,6 +228,17 @@ const UserList = () => {
     </div>
   </Link>
 ))}
+          {showMap && (
+          <div className="col-span-3 h-96 mt-4" ref={mapRef}></div>
+          )}
+      {/* {showMap && (
+        <div className="col-span-3">
+          <div id="map" style={{ height: "400px" }}></div>
+        </div>
+      )} */}
+      {/* <button onClick={handleMapToggle} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          {showMap ? "Hide Map" : "Show Map"}
+        </button> */}
     </div>
   );
 }

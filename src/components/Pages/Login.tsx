@@ -59,8 +59,6 @@ const Login = () => {
           setLoading(false);
           alert("Check your input fields");
         }
-    
-        console.log("formik", formik);
       };
 
 
@@ -122,75 +120,160 @@ const Login = () => {
     // }
     // </>
 
-    <div className="grid grid-cols-1 h-screen justify-items-center items-center">
-    <Card className="w-96">
-      <CardHeader
-        variant="gradient"
-        color="blue"
-        className="mb-4 grid h-28 place-items-center"
-      >
-        <Typography variant="h3" color="white">
-          LOGIN
-        </Typography>
-      </CardHeader>
-      <CardBody className="flex flex-col gap-4">
-        <form action="" onSubmit={handleSubmit}>
-          <div className="mb-2">
-            <Input
-              label="Email"
-              type="email"
-              size="lg"
-              {...formik.getFieldProps('email')}
-            />
+  //   <div className="grid grid-cols-1 h-screen justify-items-center items-center">
+  //   <Card className="w-96">
+  //     <CardHeader
+  //       variant="gradient"
+  //       color="blue"
+  //       className="mb-4 grid h-28 place-items-center"
+  //     >
+  //       <Typography variant="h3" color="white">
+  //         LOGIN
+  //       </Typography>
+  //     </CardHeader>
+  //     <CardBody className="flex flex-col gap-4">
+  //       <form action="" onSubmit={handleSubmit}>
+  //         <div className="mb-2">
+  //           <Input
+  //             label="Email"
+  //             type="email"
+  //             size="lg"
+  //             {...formik.getFieldProps('email')}
+  //           />
             
-          </div>
-          <div>
-            {formik.touched.email && formik.errors.email && (
-              <Typography variant="small" color="red"></Typography>
-            )}
-          </div>
+  //         </div>
+  //         <div>
+  //           {formik.touched.email && formik.errors.email && (
+  //             <Typography variant="small" color="red"></Typography>
+  //           )}
+  //         </div>
 
-          <div className="mt-4 mb-2">
-            <Input
-              label="Password"
-              type="password"
-              size="lg"
-              {...formik.getFieldProps('password')}
-            />
+  //         <div className="mt-4 mb-2">
+  //           <Input
+  //             label="Password"
+  //             type="password"
+  //             size="lg"
+  //             {...formik.getFieldProps('password')}
+  //           />
             
-          </div>
-          <div>
-            {formik.touched.password && formik.errors.password && (
-              <Typography varient="small" color="red">
-                {formik.errors.password}
-              </Typography>
-            )}
-          </div>
-          <Button variant="gradient" fullWidth className="mb-4" type="submit">
-            Login
-          </Button>
-        </form>
-      </CardBody>
-      <CardFooter className="pt-0">
-        <Button variant="gradient" fullWidth className="mb-4" onClick={signInWithGoogle}>
-          Sign In with Google
+  //         </div>
+  //         <div>
+  //           {formik.touched.password && formik.errors.password && (
+  //             <Typography varient="small" color="red">
+  //               {formik.errors.password}
+  //             </Typography>
+  //           )}
+  //         </div>
+  //         <Button variant="gradient" fullWidth className="mb-4" type="submit">
+  //           Login
+  //         </Button>
+  //       </form>
+  //     </CardBody>
+  //     <CardFooter className="pt-0">
+  //       <Button variant="gradient" fullWidth className="mb-4" onClick={signInWithGoogle}>
+  //         Sign In with Google
+  //       </Button>
+  //       <Link to={'/reset'}>
+  //         <p className="ml-1 font-bold text-sm text-blue-500 text-center ">
+  //           Reset your password
+  //         </p>
+  //       </Link>
+  //       <div className="mt-6 flex items-center text-base justify-center">
+  //         Don't have an account?
+  //         <Link to={'/register'}>
+  //           <p className="ml-1 font-bold text-sm text-blue-500 text-center ">
+  //             Register
+  //           </p>
+  //         </Link>
+  //       </div>
+  //     </CardFooter>
+  //   </Card>
+  // </div>
+
+
+  <div className="grid grid-cols-1 h-screen justify-items-center items-center">
+  <Card className="w-96">
+    <CardHeader
+      variant="gradient"
+      color="green"
+      className="mb-4 grid h-28 place-items-center"
+    >
+      <Typography variant="h3" color="white">
+        Dev-Hub
+      </Typography>
+    </CardHeader>
+    <CardBody className="flex flex-col gap-4">
+      <form action="" onSubmit={handleSubmit}>
+        <div className="mb-2">
+          <Input
+            label="Email"
+            type="email"
+            size="lg"
+            {...formik.getFieldProps('email')}
+          />
+        </div>
+        <div>
+          {formik.touched.email && formik.errors.email && (
+            <Typography variant="small" color="red"></Typography>
+          )}
+        </div>
+
+        <div className="mt-4 mb-2">
+          <Input
+            label="Password"
+            type="password"
+            size="lg"
+            {...formik.getFieldProps('password')}
+          />
+        </div>
+        <div>
+          {formik.touched.password && formik.errors.password && (
+            <Typography varient="small" color="red">
+              {formik.errors.password}
+            </Typography>
+          )}
+        </div>
+        <Button
+          color="green"
+          variant="gradient"
+          fullWidth
+          className="mb-4"
+          type="submit"
+        >
+          Login
         </Button>
-        <Link to={'/reset'}>
-          <p className="ml-1 font-bold text-sm text-blue-500 text-center ">
-            Reset your password
+      </form>
+    </CardBody>
+    <CardFooter className="pt-0">
+      <div className="flex flex-col items-center">
+        <button
+          onClick={signInWithGoogle}
+          className="w-full mb-4 bg-green-400 text-white py-2 px-4 rounded-lg flex items-center justify-center"
+        >
+          <img
+            className="w-5 h-5 mr-2"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1920px-Google_%22G%22_Logo.svg.png"
+            alt=""
+          />
+          Sign In with Google
+        </button>
+      </div>
+      <Link to={'/reset'}>
+        <p className="ml-1 font-bold text-sm text-green-400 text-center ">
+          Reset your password
+        </p>
+      </Link>
+      <div className="mt-6 flex items-center text-base justify-center">
+        Don't have an account?
+        <Link to={'/register'}>
+          <p className="ml-1 font-bold text-sm text-green-400 text-center ">
+            Register
           </p>
         </Link>
-        <div className="mt-6 flex items-center text-base justify-center">
-          Don't have an account?
-          <Link to={'/register'}>
-            <p className="ml-1 font-bold text-sm text-blue-500 text-center ">
-              Register
-            </p>
-          </Link>
-        </div>
-      </CardFooter>
-    </Card>
-  </div>
+      </div>
+    </CardFooter>
+  </Card>
+</div>
 
   )
 }

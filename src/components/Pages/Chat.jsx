@@ -91,7 +91,7 @@ const Chat = () => {
 
 
   return (
-    <div className="flex flex-col h-screen w-1/3 mx-auto">
+    <div className="flex flex-col h-screen sm:w-1/3 mx-auto">
       <h2 className="text-xl font-bold py-4">
         {`Chat with ${userData.friends.find((friend) => friend.id === id)?.name}`}
       </h2>

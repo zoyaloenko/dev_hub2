@@ -11,8 +11,6 @@ const LeftSide = () => {
 
   const { user, userData } = useContext(AuthContext)
 
-  console.log(user)
-
   return (
     <div className="flex flex-col h-screen gh-white pb-4 border-2 rounded-r-xl shadow-lg">
     <div className="flex flex-col items-center relative">
