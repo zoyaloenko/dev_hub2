@@ -97,55 +97,18 @@ const Register = () => {
           throw new Error("Function not implemented.");
         }
       };
-
-    
       const formik = useFormik(formikCustom);
-      // const formik = useFormik({ initialValues, validationSchema, handleRegister });
 
 
 
   return (
-    // <>
-    //     {loading ? (<div>Loading..</div>) : (
-    //         <div>
-    //         <h2>REGISTER</h2>
-    //         <form onSubmit={handleRegister}>
-    //             <input type="text" {...formik.getFieldProps("name")}></input>
-    //             <div>
-    //                 {formik.touched.name && formik.errors.name && (
-    //                     <h3>{formikCustom.errors.name}</h3>
-    //                 )}
-    //             </div>
-    //             <input type="email" {...formik.getFieldProps("email")}></input>
-    //             <div>
-    //                 {formik.touched.email && formik.errors.email && (
-    //                     <h3>{formikCustom.errors.email}</h3>
-    //                 )}
-    //             </div>
-    //             <input type="password" {...formik.getFieldProps("password")}></input>
-    //             <div>
-    //                 {formik.touched.password && formik.errors.password && (
-    //                     <h3>{formikCustom.errors.password}</h3>
-    //                 )}
-    //             </div>
-    //             <button type="submit">Register</button>
-    //             <p>Already have an account?</p>
-    //             <Link to="/login">Login</Link>
-
-
-
-    //         </form>
-    //         </div>
-    //     )}
-    // </>
-
-    <>
-    {loading ? (<div className="grid grid-cols-1 justify-items-center items-center h-screen"><PacmanLoader
-  color="#367fd6"
-  size={150}
-  speedMultiplier={0.5}
-/></div>) : (
-    <div className="grid grid-cols-1 justify-items-center items-center h-screen">
+        <>
+        {loading ? (<div className="grid grid-cols-1 justify-items-center items-center h-screen"><PacmanLoader
+      color="#367fd6"
+      size={150}
+      speedMultiplier={0.5}
+    /></div>) : (
+        <div className="grid grid-cols-1 justify-items-center items-center h-screen">
     <Card className="w-96">
       <CardHeader
         variant="gradient"

@@ -22,7 +22,6 @@ interface AuthContextType {
     userData: any;
   }
   
-// export const AuthContext = createContext();
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 interface AppContextProps {
@@ -61,7 +60,6 @@ const loginWithEmailAndPassword = async (email: string, password: string) => {
         await signInWithEmailAndPassword(auth, email, password);        
     } catch (err: any) {
         console.log(err.message)
-        
     }
 }
 
@@ -75,7 +73,6 @@ const registerWithEmailAndPassword = async (name: any, email: string, password: 
             providerId: "email/password",
             email: user.email,
         })
-        
     } catch (err: any) {
         console.log(err.message)
     }
@@ -120,7 +117,7 @@ useEffect((): (() => void) | void | undefined   => {
 }, [])
 
 
-// kind of exporting
+// props to the children of AuthContext.Provider
 const initialState = {
     signInWithGoogle: signInWithGoogle,
     loginWithEmailAndPassword: loginWithEmailAndPassword,

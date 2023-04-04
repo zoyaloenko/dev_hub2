@@ -4,7 +4,6 @@ import NavBar from '../NavBar/NavBar';
 import RightSide from '../RightSideBar/RightSide';
 import { Avatar } from '@material-tailwind/react';
 import avatar from '../../assets/images/developer.jpeg';
-
 import {
     collection,
     query,
@@ -19,10 +18,6 @@ import { useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from "../AppContext/AppContext";
 import addFriend from "../../assets/images/add-friend.png";
-
-
-  
-
 
 
 
@@ -52,7 +47,7 @@ const FriendProfile = () => {
             await updateDoc(data, {
                 friends: arrayUnion({
                     id: profile.uid,
-                    image: profile.image,
+                    image: profile.image || {avatar},
                     name: profile.name
                 })
             })
@@ -65,8 +60,8 @@ const FriendProfile = () => {
 
   return (
     <div className='w-full'>
-    <div className="fixed top-0 z-10 w-full bg-white">
-      <NavBar />
+      <div className="fixed top-0 z-10 w-full bg-white">
+        <NavBar />
       </div>
       <div className='flex bg-gray-100'>
         <div className="flex-auto w-[20%] fixed top-12 hidden sm:block">

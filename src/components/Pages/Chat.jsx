@@ -84,7 +84,6 @@ const Chat = () => {
         }),
       });
     }
-  
     setNewMessage('');
   };
   

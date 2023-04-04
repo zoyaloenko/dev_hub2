@@ -96,113 +96,13 @@ const Login = () => {
     
     
   return (
-    // <>
-    // {loading 
-    // ? (<div>Loading...</div>)
-    // : (<div>
-    //     <h3>LOGIN</h3>
-    //     <form onSubmit={handleSubmit}>
-    //         <input type="email" {...formik.getFieldProps("email")}>
-    //         </input>
-    //         <div>{formik.touched.email && formik.errors.email && (<p>{formikCustom.errors.email}</p>)}</div>
-    //         <input type="password" {...formik.getFieldProps("password")}>
-    //         </input>
-    //         <div>{formik.touched.password && formik.errors.password && (<p>{formikCustom.errors.password}</p>)}</div>
-    //         <button type="submit">Login</button>
-    //     </form>
-    //     <button onClick={signInWithGoogle}>Sign In with Google</button>
-    //     <Link to="/reset">Reset the password</Link>
-    //     <div>
-    //         <p>Don't have an account?</p>
-    //         <Link to="/register">Register</Link>
-    //     </div>
-    //     </div>)
-    // }
-    // </>
-
-  //   <div className="grid grid-cols-1 h-screen justify-items-center items-center">
-  //   <Card className="w-96">
-  //     <CardHeader
-  //       variant="gradient"
-  //       color="blue"
-  //       className="mb-4 grid h-28 place-items-center"
-  //     >
-  //       <Typography variant="h3" color="white">
-  //         LOGIN
-  //       </Typography>
-  //     </CardHeader>
-  //     <CardBody className="flex flex-col gap-4">
-  //       <form action="" onSubmit={handleSubmit}>
-  //         <div className="mb-2">
-  //           <Input
-  //             label="Email"
-  //             type="email"
-  //             size="lg"
-  //             {...formik.getFieldProps('email')}
-  //           />
-            
-  //         </div>
-  //         <div>
-  //           {formik.touched.email && formik.errors.email && (
-  //             <Typography variant="small" color="red"></Typography>
-  //           )}
-  //         </div>
-
-  //         <div className="mt-4 mb-2">
-  //           <Input
-  //             label="Password"
-  //             type="password"
-  //             size="lg"
-  //             {...formik.getFieldProps('password')}
-  //           />
-            
-  //         </div>
-  //         <div>
-  //           {formik.touched.password && formik.errors.password && (
-  //             <Typography varient="small" color="red">
-  //               {formik.errors.password}
-  //             </Typography>
-  //           )}
-  //         </div>
-  //         <Button variant="gradient" fullWidth className="mb-4" type="submit">
-  //           Login
-  //         </Button>
-  //       </form>
-  //     </CardBody>
-  //     <CardFooter className="pt-0">
-  //       <Button variant="gradient" fullWidth className="mb-4" onClick={signInWithGoogle}>
-  //         Sign In with Google
-  //       </Button>
-  //       <Link to={'/reset'}>
-  //         <p className="ml-1 font-bold text-sm text-blue-500 text-center ">
-  //           Reset your password
-  //         </p>
-  //       </Link>
-  //       <div className="mt-6 flex items-center text-base justify-center">
-  //         Don't have an account?
-  //         <Link to={'/register'}>
-  //           <p className="ml-1 font-bold text-sm text-blue-500 text-center ">
-  //             Register
-  //           </p>
-  //         </Link>
-  //       </div>
-  //     </CardFooter>
-  //   </Card>
-  // </div>
-
-
-  <div className="grid grid-cols-1 h-screen justify-items-center items-center">
-  <Card className="w-96">
-    <CardHeader
-      variant="gradient"
-      color="green"
-      className="mb-4 grid h-28 place-items-center"
-    >
-      <Typography variant="h3" color="white">
-        Dev-Hub
+<div className="h-screen bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
+<div className="flex flex-col items-center justify-center mt-12">
+  <Typography className="font-light pb-10"variant="h1" color="white" style={{ fontFamily: "Courier New" }}>
+        DevHub
       </Typography>
-    </CardHeader>
-    <CardBody className="flex flex-col gap-4">
+  <Card className="w-90 flex flex-col gap-4 bg-white shadow rounded p-8">
+    <CardBody className="">
       <form action="" onSubmit={handleSubmit}>
         <div className="mb-2">
           <Input
@@ -234,10 +134,8 @@ const Login = () => {
           )}
         </div>
         <Button
-          color="green"
-          variant="gradient"
           fullWidth
-          className="mb-4"
+          className="mb-4 bg-green-400"
           type="submit"
         >
           Login
@@ -273,6 +171,7 @@ const Login = () => {
       </div>
     </CardFooter>
   </Card>
+</div>
 </div>
 
   )

@@ -8,6 +8,7 @@ import News from './News';
 import Chat from './Chat';
 import EditProfile from './EditProfile';
 import RightSide from '../RightSideBar/RightSide';
+import Mobs from './Mobs';
 
 const Pages = () => {
   return (
@@ -23,6 +24,7 @@ const Pages = () => {
         <Route path="/chat/:id" element={<Chat />} />
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/rightSide" element={<RightSide />} />
+        <Route path="/mobs" element={<Mobs />} />
       </Routes>
     </div>
   )

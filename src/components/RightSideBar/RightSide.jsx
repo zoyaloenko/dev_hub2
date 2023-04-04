@@ -7,6 +7,7 @@ import { arrayRemove, collection, getDocs, query, updateDoc, where, doc } from '
 import { db } from '../firebase/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faMessage, faTrash } from "@fortawesome/free-solid-svg-icons";
+import NavBar from '../NavBar/NavBar';
 
 
 const RightSide = () => {
@@ -35,7 +36,10 @@ const RightSide = () => {
 
   return (
     <div className="flex flex-col h-screen bg-white shadow-lg border-2 rounded-l-xl">
-    <div className="mx-2 mt-10">
+      <div className="fixed top-0 z-10 w-full bg-white">
+        <NavBar />
+      </div>
+    <div className="mx-2 mt-16">
       <p className="font-medium text-sm text-gray-700 no-underline tracking-normal leading-non">
         Friends:{' '}
       </p>

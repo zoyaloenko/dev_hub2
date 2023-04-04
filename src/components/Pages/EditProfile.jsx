@@ -4,6 +4,7 @@ import { db } from '../firebase/firebase';
 import { AuthContext } from "../AppContext/AppContext";
 import PlacesAutocomplete from 'react-places-autocomplete';
 import { Link } from "react-router-dom";
+import NavBar from "../NavBar/NavBar";
 
 const EditProfile = () => {
   const { user, userData } = useContext(AuthContext);
@@ -40,11 +41,14 @@ const EditProfile = () => {
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="bg-gradient-to-tl from-green-400 to-indigo-900 min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="fixed top-0 left-0 z-10 w-full bg-white">
+      <NavBar />
+    </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <Link
         to="/"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className="bg-green-400 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >Go to Home Page
     </Link>
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
@@ -119,7 +123,7 @@ const EditProfile = () => {
             </div>
             <div>
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-green-400 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
                 disabled={isSubmitting}
               >

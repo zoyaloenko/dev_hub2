@@ -5,10 +5,12 @@ import { db } from "../firebase/firebase";
 import { PostReducer, postActions, postsStates } from "../AppContext/PostReducer";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import PostCard from "./PostCard";
-
 import { Avatar, Button } from '@material-tailwind/react';
 import avatar from '../../assets/images/developer.jpeg';
 import UserList from "../Pages/UserList";
+import { useMediaQuery } from "@react-hook/media-query";
+
+
 const addImage = require('../../assets/images/addImage.png');
 
 
@@ -100,21 +102,6 @@ const Main = () => {
     }
   }
 
-  // useEffect((): (() => void) | void | undefined => {
-  //   const postData = async () => {
-  //     const q = query(collectionPosts, orderBy("timestamp", "desc"));
-  //     await onSnapshot(q, (doc) => {
-  //       dispatch({
-  //         type: SUBMIT_POST,
-  //         posts: doc?.docs?.map((item) => item?.data()),
-  //       });
-  //       setImage('');
-  //       setFile(null);
-  //     })
-  //   };
-  //   return () => postData();
-  // }, [SUBMIT_POST])
-
 const postData = async () => {
   const q = query(collectionPosts, orderBy("timestamp", "desc"));
   await onSnapshot(q, (doc) => {
@@ -131,7 +118,7 @@ useEffect(() => {
   postData();
 }, [dispatch])
 
-    
+const isMobile = useMediaQuery('(max-width: 640px)');
 
   return (
 
@@ -144,21 +131,32 @@ useEffect(() => {
         src={user?.photoURL || avatar}
         alt="avatarPhoto"
       ></Avatar>
-      <form className="w-full" onSubmit={handleSubmitPost}>
-        <div className="flex justify-between items-center">
-          <div className="w-full ml-4">
-            <input
-              name="text"
-              type="text"
-              placeholder={`What's on your mind, ${userData?.name || user?.displayName}`}
-              className="outline-none w-full bg-white rounded-md"
-              ref={text}
-            ></input>
-          </div>
-          <div className="mx-4 max-w-md h-auto">
-            {image && <img src={image} alt="previewImage"/>}
-          </div>
-          <div>
+
+
+
+ <form className="w-full" onSubmit={handleSubmitPost}>
+            <div className="flex justify-between items-center">
+              <div className="w-full ml-4">
+                <input
+                  name="text"
+                  type="text"
+                  placeholder={
+                    isMobile
+                      ? "What's up?"
+                      : `What's on your mind, ${
+                          userData?.name || user?.displayName
+                        }?`
+                  }
+                  className="outline-none w-full bg-white rounded-md"
+                  ref={text}
+                ></input>
+              </div>
+              <div className="mx-4 max-w-md h-auto">
+                {image && <img src={image} alt="previewImage" />}
+              </div>
+              <div>
+
+
           <Button className="mr-4 px-6 py-3 text-lg" variant="text" type="submit">
             SHARE
           </Button>
