@@ -5,14 +5,10 @@ import { db } from "../firebase/firebase";
 import { PostReducer, postActions, postsStates } from "../AppContext/PostReducer";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import PostCard from "./PostCard";
-import { Avatar, Button } from '@material-tailwind/react';
+import { Avatar } from '@material-tailwind/react';
 import avatar from '../../assets/images/developer.jpeg';
 import UserList from "../Pages/UserList";
 import { useMediaQuery } from "@react-hook/media-query";
-
-
-const addImage = require('../../assets/images/addImage.png');
-
 
 const Main = () => {
   const { user, userData } = useContext(AuthContext);
@@ -122,19 +118,17 @@ const isMobile = useMediaQuery('(max-width: 640px)');
 
   return (
 
-  <div className="flex flex-col item-center">
-  <div className="flex flex-col py-4 w-full bg-white rounded-3xl shadow-lg">
-    <div className="flex items-center border-b-2 border-gray-300 pb-4 pl-4 w-full">
-      <Avatar
-        size="md"
-        variant="circular"
-        src={user?.photoURL || avatar}
-        alt="avatarPhoto"
-      ></Avatar>
+    <div className="flex flex-col item-center">
+      <div className="flex flex-col py-4 w-full bg-white rounded-3xl shadow-lg">
+        <div className="flex items-center border-b-2 border-gray-300 pb-4 pl-4 w-full">
+          <Avatar
+            size="md"
+            variant="circular"
+            src={user?.photoURL || avatar}
+            alt="avatarPhoto"
+          ></Avatar>
 
-
-
- <form className="w-full" onSubmit={handleSubmitPost}>
+          <form className="w-full" onSubmit={handleSubmitPost}>
             <div className="flex justify-between items-center">
               <div className="w-full ml-4">
                 <input
@@ -155,48 +149,93 @@ const isMobile = useMediaQuery('(max-width: 640px)');
                 {image && <img src={image} alt="previewImage" />}
               </div>
               <div>
-
-
-          <Button className="mr-4 px-6 py-3 text-lg" variant="text" type="submit">
-            SHARE
-          </Button>
+                <button className="mr-4 px-6 py-3 text-lg hover:translate-y-1 duration-500 ease-in-out text-indigo-400 hover:text-indigo-900" type="submit">
+                  SHARE
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div className="flex justify-around items-center pt-4">
+          <div className="flex items-center">
+            <label
+              htmlFor="addImage"
+              className="cursor-pointer flex items-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-8 h-8 hover:translate-y-1 duration-500 ease-in-out hover:text-green-500"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                />
+              </svg>
+              <input
+                type="file"
+                id="addImage"
+                style={{ display: 'none' }}
+                onChange={handleUpload}
+              ></input>
+            </label>
+            {file && (
+              <button className="ml-2" type="submit" onClick={submitImage}>
+                Upload
+              </button>
+            )}
           </div>
         </div>
-      </form>
-    </div>
-    <div className="flex justify-around items-center pt-4">
-      <div className="flex items-center">
-        <label
-          htmlFor="addImage"
-          className="cursor-pointer flex items-center"
-        >
-          <img className="h-12 mr-4" src={addImage} alt="" />
-          <input type="file" id="addImage" style={{ display: 'none' }} onChange={handleUpload}></input>
-        </label>
-        {file && <button type="submit" onClick={submitImage}>Upload</button>}
       </div>
+      <UserList />
+
+      <div className="flex flex-col pb-4 w-full">
+        {state.posts.length > 0 &&
+          state?.posts.map(
+            (
+              post: {
+                logo: any;
+                documentId: any;
+                uid: any;
+                name: any;
+                email: any;
+                image: any;
+                text: any;
+                timestamp: { toDate: () => string | number | Date };
+              },
+              index: Key | null | undefined
+            ) => {
+              return (
+                <PostCard
+                  key={index}
+                  logo={post.logo}
+                  id={post.documentId}
+                  uid={post.uid}
+                  name={post.name}
+                  email={post.email}
+                  image={post.image}
+                  text={post.text}
+                  timestamp={new Date(post?.timestamp?.toDate()).toLocaleString(
+                    'en-US',
+                    {
+                      day: 'numeric',
+                      month: 'short',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                    }
+                  )}
+                />
+              );
+            }
+          )}
+      </div>
+      <div ref={scrollRef}></div>
     </div>
-  </div>
-  <UserList />
-
-  <div className="flex flex-col py-4 w-full">{state.posts.length > 0 && state?.posts.map((post: { logo: any; documentId: any; uid: any; name: any; email: any; image: any; text: any; timestamp: { toDate: () => string | number | Date; }; }, index: Key | null | undefined) => {
-      return (
-        <PostCard 
-          key={index}
-          logo={post.logo} 
-          id={post.documentId}
-          uid={post.uid}
-          name={post.name}
-          email={post.email}
-          image={post.image}
-          text={post.text}
-          timestamp={new Date(post?.timestamp?.toDate()).toLocaleString('en-US', { day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric' })}
-          />)
-    })}</div>
-     <div ref={scrollRef}></div>
-  </div>
-
-  )
+  );
 }
 
 export default Main;

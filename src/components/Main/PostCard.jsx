@@ -4,11 +4,7 @@ import { PostReducer, postActions, postsStates } from "../AppContext/PostReducer
 import { doc, setDoc, collection, query, onSnapshot, where, getDocs, updateDoc, arrayUnion, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { Avatar } from "@material-tailwind/react";
-import addFriend from "../../assets/images/add-friend.png";
-import like from "../../assets/images/like.png";
 import CommentSection from "./CommentSection";
-import comment from "../../assets/images/comment.png";
-import remove from "../../assets/images/delete.png";
 import avatar from '../../assets/images/developer.jpeg';
 
 
@@ -121,11 +117,6 @@ const PostCard = ({ uid, id, logo, name, email, text, image, timestamp }) => {
               onClick={addUser}
               className="w-full flex justify-end cursor-pointer mr-10"
             >
-              {/* <img
-                className="hover:bg-blue-100 rounded-xl p-2"
-                src={addFriend}
-                alt="addFriend"
-              ></img> */}
               <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -161,8 +152,6 @@ const PostCard = ({ uid, id, logo, name, email, text, image, timestamp }) => {
             className="flex items-center cursor-pointer rounded-lg p-2 hover:bg-gray-100"
             onClick={handleLike}
           >
-            {/* <img className="h-8 mr-4" src={like} alt=""></img> */}
-
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -179,7 +168,7 @@ const PostCard = ({ uid, id, logo, name, email, text, image, timestamp }) => {
               </svg>
 
             {state.likes?.length > 0 && (
-              <span className="text-md font-medium text-black-700">{state.likes.length}</span>
+              <span className="text-md font-medium text-black-700 ml-1">{state.likes.length}</span>
             )}
           </button>
           <div
@@ -187,7 +176,6 @@ const PostCard = ({ uid, id, logo, name, email, text, image, timestamp }) => {
             onClick={handleOpen}
           >
             <div className="flex items-center cursor-pointer">
-              {/* <img className="h-8 mr-4" src={comment} alt="comment"></img> */}
               <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -226,10 +214,6 @@ const PostCard = ({ uid, id, logo, name, email, text, image, timestamp }) => {
                       d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
                     />
                   </svg>
-            {/* <img className="h-8 mr-4" src={remove} alt="delete"></img> */}
-            {/* <p className="font-roboto font-medium text-md text-black-700 no-underline tracking-normal leading-none">
-              Delete
-            </p> */}
           </div>}
         </div>
         {open && <CommentSection postId={id} />}

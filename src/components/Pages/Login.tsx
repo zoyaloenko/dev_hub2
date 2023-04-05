@@ -100,7 +100,9 @@ const Login = () => {
   <Typography className="font-light pb-10"variant="h1" color="white" style={{ fontFamily: "Courier New" }}>
   <span className='text-transparent bg-clip-text bg-green-400'>
                 Only<span className='text-green-600'>Devs</span>
-            </span>      </Typography>
+            </span> 
+            <p className="text-sm">social media app for developers</p>
+                 </Typography>
   <Card className="w-90 flex flex-col gap-4 bg-white shadow rounded p-8">
     <CardBody className="">
       <form action="" onSubmit={handleSubmit}>

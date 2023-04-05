@@ -62,45 +62,59 @@ const EditProfile = () => {
               </label>
 
 
-              <PlacesAutocomplete
-                value={location}
-                onChange={setLocation}
-                >
-  {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-    <div>
-      <input
-        {...getInputProps({
-          placeholder: 'Location',
-          className: 'location-search-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
-          id: 'location',
-          
-        })}
-      />
-      <div className="autocomplete-dropdown-container">
-        {loading && <div>Loading...</div>}
-        {suggestions.map((suggestion, index) => {
-          const className = suggestion.active
-            ? 'suggestion-item--active'
-            : 'suggestion-item';
-          // inline style for demonstration purpose
-          const style = suggestion.active
-            ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-            : { backgroundColor: '#ffffff', cursor: 'pointer' };
-          return (
-            <div
-              key={index}
-              className={className}
-              style={style}
-              {...getSuggestionItemProps(suggestion)}
-            >
-              <span>{suggestion.description}</span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  )}
-</PlacesAutocomplete>
+              <PlacesAutocomplete value={location} onChange={setLocation}>
+                      {({
+                        getInputProps,
+                        suggestions,
+                        getSuggestionItemProps,
+                        loading,
+                      }) => (
+                        <div style={{ position: 'relative' }}>
+                          <input
+                            {...getInputProps({
+                              placeholder: 'Location',
+                              className:
+                                'location-search-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+                              id: 'location',
+                            })}
+                          />
+                          <div
+                            className="autocomplete-dropdown-container"
+                            style={{
+                              position: 'absolute',
+                              top: '100%',
+                              left: 0,
+                              right: 0,
+                              maxHeight: 150,
+                              overflow: 'scroll',
+                              backgroundColor: '#ffffff',
+                              zIndex: 1,
+                            }}
+                          >
+                            {loading && <div>Loading...</div>}
+                            {suggestions.map((suggestion, index) => {
+                              const className = suggestion.active
+                                ? 'suggestion-item--active'
+                                : 'suggestion-item';
+                              const style = suggestion.active
+                                ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                              return (
+                                <div
+                                  key={index}
+                                  className={className}
+                                  style={style}
+                                  {...getSuggestionItemProps(suggestion)}
+                                >
+                                  <span>{suggestion.description}</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+              </PlacesAutocomplete>
+
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 font-bold mb-2" htmlFor="languages">
