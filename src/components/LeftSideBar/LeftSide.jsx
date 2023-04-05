@@ -15,12 +15,21 @@ import {
 
 const LeftSide = () => {
 
+  
   const { user, userData } = useContext(AuthContext)
   const [mobs, setMobs] = useState([]);
-
+  
   useEffect(() => {
     const fetchMobs = async () => {
-      const q = query(collection(db, "mobs"), where("members", "array-contains", user?.displayName));
+      // const q = query(collection(db, "mobs"), where("members", "array-contains", user?.displayName));
+      const q = query(
+        collection(db, "mobs"),
+        where("members", "array-contains", {  
+          uid: user?.uid,
+          name: user?.displayName,
+          email: user?.email,
+          image: user?.photoURL, })
+      );
       const querySnapshot = await getDocs(q);
       const mobsData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setMobs(mobsData);
@@ -28,6 +37,7 @@ const LeftSide = () => {
     fetchMobs();
   }, [user]);
   
+
 
   return (
     <div className="flex flex-col h-screen gh-white pb-4 border-2 rounded-r-xl shadow-lg">
@@ -46,7 +56,7 @@ const LeftSide = () => {
     </div>
     <div className="flex flex-col pl-2">
       <div className="flex justify-center items-center pt-4">
-        <Link to='/mobs'>
+        <Link to='/mobs'>          
         <p className=" font-bold text-md text-black no-underline tracking-normal leading-none mx-2">
           Find and create mobs
         </p>

@@ -3,7 +3,7 @@ import { collection, doc, getDocs, query, updateDoc, where } from "firebase/fire
 import { db } from '../firebase/firebase';
 import { AuthContext } from "../AppContext/AppContext";
 import PlacesAutocomplete from 'react-places-autocomplete';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 
 const EditProfile = () => {
@@ -11,7 +11,7 @@ const EditProfile = () => {
   const [location, setLocation] = useState(userData?.location || "");
   const [languages, setLanguages] = useState(userData?.languages || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+  const navigate = useNavigate();  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,15 +25,17 @@ const EditProfile = () => {
         location,
         languages,
       });
-      alert("Profile updated successfully!");
-      setLocation("");
+      // setLocation("");
       setLanguages("");
-    } catch (err) {
+      // setIsSubmitting(false);
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
+        } catch (err) {
       console.log(err.message);
       alert("Failed to update profile");
+      // setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
   };
 
   if (!user) {
@@ -122,14 +124,18 @@ const EditProfile = () => {
                     </datalist>
             </div>
             <div>
-              <button
-                className="bg-green-400 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            <button
+                className={`${
+                  isSubmitting
+                    ? "bg-orange-400 cursor-not-allowed"
+                    : "bg-green-400 hover:bg-green-700"
+                } text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
                 type="submit"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Submited" : "Save Changes"}
-              </button>
-            </div>
+      </button>          
+        </div>
           </form>
         </div>
       </div>

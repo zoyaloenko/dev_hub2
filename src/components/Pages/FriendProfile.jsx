@@ -18,6 +18,7 @@ import { useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from "../AppContext/AppContext";
 import addFriend from "../../assets/images/add-friend.png";
+import background from '../../assets/images/background.jpeg'
 
 
 
@@ -71,7 +72,8 @@ const FriendProfile = () => {
           <div className="w-[95%] mx-auto">
             <div>
                 <div className='relative py-4'>
-                    <div className="h-96 w-full bg-green-500"></div>
+                    {/* <div className="h-96 w-full bg-green-500"></div> */}
+                    <div className="h-96 w-full" style={{ backgroundImage: `url(${background})` }}></div>
                     <div className="absolute top-10 right-8">
                     {user?.uid !== profile?.uid && (
                         <div
@@ -95,12 +97,13 @@ const FriendProfile = () => {
                         size="xxl"
                         variant="circular"
                     />
-                    <p className="py-2 font-roboto font-medium text-md text-black no-underline tracking-normal leading-none">
-                    {profile?.email}
-                     </p>
-                    <p className="py-2 font-roboto font-medium text-md text-black no-underline tracking-normal leading-none">
+                  <p className="py-2 font-roboto font-medium text-xl text-white no-underline tracking-normal leading-none">
                     {profile?.name}
                     </p>
+
+                    <p className="py-2 font-roboto font-medium text-xl text-white no-underline tracking-normal leading-none">
+                    {profile?.email}
+                     </p>
                     </div>
                   <div className="flex flex-col absolute right-6 bottom-12">
                   <div className="flex items-center">
@@ -124,7 +127,7 @@ const FriendProfile = () => {
                       />
                     </svg>
 
-                    <span className="ml-2 py-2 font-roboto font-medium text-md text-black no-underline tracking-normal leading-none">
+                    <span className="ml-2 py-2 font-roboto font-medium text-xl text-black no-underline tracking-normal leading-none">
                     {`Studies ${profile?.languages}`}
                     </span>
                   </div>
@@ -144,7 +147,7 @@ const FriendProfile = () => {
                       />
                     </svg>
 
-                    <span className="ml-2 py-2 font-roboto font-medium text-md text-black no-underline tracking-normal leading-none">
+                    <span className="ml-2 py-2 font-roboto font-medium text-xl text-black no-underline tracking-normal leading-none">
                       {`Lives in ${profile?.location}`}
                     </span>
                   </div>

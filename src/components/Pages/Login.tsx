@@ -8,7 +8,6 @@ import { FormikConfig, FormikValues } from 'formik';
 
 import {
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
   Typography,
@@ -99,8 +98,9 @@ const Login = () => {
 <div className="h-screen bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
 <div className="flex flex-col items-center justify-center mt-12">
   <Typography className="font-light pb-10"variant="h1" color="white" style={{ fontFamily: "Courier New" }}>
-        DevHub
-      </Typography>
+  <span className='text-transparent bg-clip-text bg-green-400'>
+                Only<span className='text-green-600'>Devs</span>
+            </span>      </Typography>
   <Card className="w-90 flex flex-col gap-4 bg-white shadow rounded p-8">
     <CardBody className="">
       <form action="" onSubmit={handleSubmit}>

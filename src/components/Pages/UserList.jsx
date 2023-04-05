@@ -187,9 +187,10 @@ const UserList = () => {
   
 
   return (
-    <div className="py-4 px-8 grid grid-cols-3 gap-4">
-      <h2 className="text-2xl font-bold mb-4 col-span-3">Find other developers</h2>
-      <div className="col-span-3">
+    <> 
+    <div className="py-4 px-0.2 sm:px-8 grid grid-cols-2 gap-2 md:grid-cols-3 sm:gap-4">
+      <h2 className="text-2xl font-bold sm:mb-4 col-span-3">Find other developers</h2>
+      <div className="col-span-3 ">
         <select
           value={selectedLanguage}
           onChange={(e) => handleLanguageSelect(e.target.value)}
@@ -209,10 +210,12 @@ const UserList = () => {
           {showMap ? "Hide Map" : "Show Map"}
         </button> 
         </div>
-      {users.map((user) => (
+        </div>
+        <div className="py-4 px-0.2 sm:px-8 grid grid-cols-2 gap-2 md:grid-cols-3 sm:gap-4">
+            {users.map((user) => (
             <Link key={user.id} to={`/profile/${user.uid}`}>
-              <div key={user.id} className="bg-white p-2 rounded-md shadow-md flex items-center">
-                <img src={user.image || avatar} alt="userImage" className="w-10 h-10 mr-3 rounded-full"/>
+              <div key={user.id} className="bg-white  w-full p-2 rounded-md shadow-md items-center inline-flex min-w-min">
+                <img src={user.image || avatar} alt="userImage" className="w-10 h-10 mr-2 sm:mr-3 rounded-full"/>
                 <div>
                   <p className="text-base font-semibold">{user.name}</p>
                   <p className="text-gray-500 text-xs">{user.location}</p>
@@ -221,11 +224,11 @@ const UserList = () => {
               </div>
             </Link>
           ))}
+            </div>
           {showMap && (
           <div className="col-span-3 h-96 mt-4" ref={mapRef}></div>
           )}
-    </div>
-  );
+    </>    );
 }
 
 export default UserList;

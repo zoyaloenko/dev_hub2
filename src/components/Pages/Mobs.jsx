@@ -73,7 +73,15 @@ const Mobs = () => {
         createdBy: user.uid,
         author: user.displayName,
         createdAt: serverTimestamp(),
-        members: [user.displayName],
+        // members: [user.displayName],
+        members: [
+          {
+            uid: user?.uid,
+            name: user?.displayName,
+            email: user?.email,
+            image: user?.photoURL,
+          },
+        ],
       };
       const docRef = await addDoc(groupRef, newGroup);
       console.log("Group created with ID: ", docRef.id);
@@ -83,22 +91,30 @@ const Mobs = () => {
   };
   
 
-  const sendJoinRequest = async (mobName) => {
+  const sendJoinRequest = async (mobName, user) => {
     // const userId = user.uid;
     const q = query(collection(db, "mobs"), where("name", "==", mobName));
     const querySnapshot = await getDocs(q);
     const groupId = querySnapshot.docs[0].id;
     const mobRef = doc(db, "mobs", groupId);
+    // await updateDoc(mobRef, {
+    //   joinRequests: arrayUnion(user.displayName)
+    //   });
     await updateDoc(mobRef, {
-      joinRequests: arrayUnion(user.displayName)
-      });
+      joinRequests: arrayUnion({
+        uid: user?.uid,
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+      }),
+    });
     
     console.log("Join request sent for group ", groupId);
   };
   
 
 
-  const handleApprove = async (mobName, userName) => {
+  const handleApprove = async (mobName, user) => {
     const q = query(collection(db, "mobs"), where("name", "==", mobName));
     const querySnapshot = await getDocs(q);
     const groupId = querySnapshot.docs[0].id;
@@ -106,23 +122,48 @@ const Mobs = () => {
   
     try {
       // Remove the user from the joinRequests array
-      await updateDoc(mobRef, {
-        joinRequests: arrayRemove(userName)
-      });
+      // await updateDoc(mobRef, {
+      //   joinRequests: arrayRemove(userName)
+      // });
+//       await updateDoc(mobRef, {
+//         joinRequests: arrayRemove( { uid: user?.uid,
+//           name: user?.displayName,
+//           email: user?.email,
+//           image: user?.photoURL,
+// })
+//       });
+        await updateDoc(mobRef, {
+          joinRequests: arrayRemove({ ...user }),
+        });
+
+
   
       // Add the user to the members array
-      await updateDoc(mobRef, {
-        members: arrayUnion(userName)
-      });
+      // await updateDoc(mobRef, {
+      //   members: arrayUnion(userName)
+      // });
+//       await updateDoc(mobRef, {
+//         members: arrayUnion({ uid: user?.uid,
+//           name: user?.displayName,
+//           email: user?.email,
+//           image: user?.photoURL,
+// })
+//       });
+
+        await updateDoc(mobRef, {
+          members: arrayUnion({ ...user }),
+        });
+
+
   
-      console.log(`${userName} has been added to the members array.`);
+      console.log(`${user.displayName} has been added to the members array.`);
     } catch (error) {
       console.error(error);
     }
   };
   
   
-  const handleReject = async (mobName, userName) => {
+  const handleReject = async (mobName, user) => {
     const q = query(collection(db, "mobs"), where("name", "==", mobName));
     const querySnapshot = await getDocs(q);
     const groupId = querySnapshot.docs[0].id;
@@ -131,10 +172,10 @@ const Mobs = () => {
     try {
       // Remove the user from the joinRequests array
       await updateDoc(mobRef, {
-        joinRequests: arrayRemove(userName)
+        joinRequests: arrayRemove({...user})
       });
   
-      console.log(`${userName} has been removed from the joinRequests array.`);
+      console.log(`${user.name} has been removed from the joinRequests array.`);
     } catch (error) {
       console.error(error);
     }
@@ -184,18 +225,19 @@ const Mobs = () => {
                 <h2 className="text-xl font-bold mb-2">{mob.name}</h2>
                 <p className="mb-2">{mob.description}</p>
                 <p className="mb-2">Created by: {mob.author}</p>
-                <p className="mb-4">Members: {mob.members && mob.members.join(", ")}</p>
+                {/* <p className="mb-4">Members: {mob.members && mob.members.join(", ")}</p> */}
+                <p className="mb-4">Members: {mob.members?.map(member => member.name).join(", ") ?? "No members"}</p>
 
                 {user.uid !== mob.createdBy && (
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-2" onClick={() => sendJoinRequest(mob.name)}>
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-2" onClick={() => sendJoinRequest(mob.name, user)}>
                     Join Request
                   </button>
                 )}
-
+                <p className="text-left mb-2 ">Pending requests:</p>
                 {mob.joinRequests &&
                   mob.joinRequests.map((request, index) => (
                     <div key={index} className="flex items-center mb-2">
-                      <p>{request}</p>
+                      <p>{request.name}</p>
                       {user.uid === mob.createdBy && (
                         <>
                           <button
